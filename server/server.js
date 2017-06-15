@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const morgan = require('morgan');
+const http = require('https');
+const request = require('request');
 const bodyParser = require('body-parser');
 const app = express();
 var router = express.Router();
-const port = process.env.PORT || 1030;
+const port = process.env.PORT || 1080;
 const testCtrl = require('./Test/testController.js');
 
 //=============================================================================
@@ -30,7 +32,10 @@ const testCtrl = require('./Test/testController.js');
     app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
     app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'))
 
+    app.get('/api/answers', testCtrl.getAnswers);
     app.post('/api/answers', testCtrl.addAnswers);
+    app.post('/api/sendRes', testCtrl.sendResponse);
+
 // require('./config/middleware.js') (app,express);
 // require('./config/routes.js') (app,express);
 
